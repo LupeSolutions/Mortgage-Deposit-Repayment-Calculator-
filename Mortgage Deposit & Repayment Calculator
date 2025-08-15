@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO -->
+  <title>Mortgage & Deposit Calculator – Calculate Your Deposit & Monthly Payment</title>
+  <meta name="description" content="Use our easy mortgage and deposit calculator to find your required deposit and monthly mortgage payment. Supports financial planning for homeowners.">
+  
+  <!-- Open Graph / Twitter Card -->
+  <meta property="og:title" content="Mortgage & Deposit Calculator – Calculate Your Deposit & Monthly Payment">
+  <meta property="og:description" content="Use our easy mortgage and deposit calculator to find your required deposit and monthly mortgage payment. Supports financial planning for homeowners.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/eco-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mortgage & Deposit Calculator">
+  <meta name="twitter:description" content="Find your deposit and mortgage payments quickly with our calculators.">
+  <meta name="twitter:image" content="images/eco-banner.png">
+
+  <!-- GA4 Tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX'); // Replace with your GA4 ID
+  </script>
+
+  <!-- FAQ Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I calculate my deposit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Enter the house value and the deposit percentage into our Deposit Calculator to automatically calculate the required deposit."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I calculate my monthly mortgage payment?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use our Mortgage Calculator by entering the loan amount, number of years, and interest rate to get your monthly payment."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0faf0;
+      color: #2a4d2a;
+      margin: 0;
+      padding: 2rem;
+    }
+
+    h1 { text-align: center; margin-bottom: 1rem; }
+    h2 { text-align: center; margin-bottom: 1rem; }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0 2rem 0;
+    }
+
+    .cta-buttons a {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      color: white;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .cta-buttons a:hover { transform: scale(1.05); box-shadow: 0 6px 12px rgba(0,0,0,0.25); }
+    .cta-buttons a:active { transform: scale(0.95); }
+
+    .coffee { background-color: #ff7f50; }
+    .affiliate { background-color: #1e90ff; }
+
+    .calculator-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .calculator {
+      background-color: #e8f5e9;
+      border-radius: 10px;
+      padding: 2rem;
+      flex: 1 1 300px;
+      max-width: 400px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .calculator:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    label { display: block; margin: 0.5rem 0 0.2rem; }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #1e8f1e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.1s;
+    }
+
+    button:hover { background-color: #166f16; }
+    button:active { transform: scale(0.97); }
+
+    .result {
+      margin-top: 1rem;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.1rem;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    .result.show { opacity: 1; }
+
+    @media(max-width: 800px) {
+      .calculator-container { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <main>
+    <h1>Mortgage & Deposit Calculator</h1>
+
+    <!-- Top CTAs -->
+    <div class="cta-buttons">
+      <a href="https://www.buymeacoffee.com/LupeSolutions" target="_blank" class="coffee"
+         onclick="gtag('event', 'click', {'event_category':'CTA','event_label':'Buy Me a Coffee Top'});">
+         ☕ Support Me on Buy Me a Coffee
+      </a>
+      <a href="https://www.blueaperenewables.co.uk/ref/48/" target="_blank" class="affiliate"
+         onclick="gtag('event', 'click', {'event_category':'CTA','event_label':'Blue Ape Affiliate Top'});">
+         💡 Explore Blue Ape Renewables
+      </a>
+    </div>
+
+    <div class="calculator-container">
+      <!-- Deposit Calculator -->
+      <section class="calculator" aria-label="Deposit Calculator">
+        <h2>Deposit Calculator</h2>
+        <label for="houseValue">House Value (£)</label>
+        <input type="number" id="houseValue" placeholder="Enter house value">
+
+        <label for="depositPercent">Deposit Percentage (%)</label>
+        <input type="number" id="depositPercent" placeholder="Enter deposit %">
+
+        <button onclick="calculateDeposit()">Calculate Deposit</button>
+        <div class="result" id="depositResult"></div>
+      </section>
+
+      <!-- Mortgage Calculator -->
+      <section class="calculator" aria-label="Mortgage Calculator">
+        <h2>Mortgage Calculator</h2>
+        <label for="loanAmount">Amount Borrowed (£)</label>
+        <input type="number" id="loanAmount" placeholder="Enter loan amount">
+
+        <label for="loanYears">Term (Years)</label>
+        <input type="number" id="loanYears" placeholder="Enter term in years">
+
+        <label for="interestRate">Interest Rate (%)</label>
+        <input type="number" id="interestRate" placeholder="Enter interest rate">
+
+        <button onclick="calculateMortgage()">Calculate Monthly Payment</button>
+        <div class="result" id="mortgageResult"></div>
+      </section>
+    </div>
+
+    <!-- Bottom CTAs -->
+    <div class="cta-buttons">
+      <a href="buymeacoffee.com/LupeSolutions" target="_blank" class="coffee"
+         onclick="gtag('event', 'click', {'event_category':'CTA','event_label':'Buy Me a Coffee Bottom'});">
+         ☕ Support Me on Buy Me a Coffee
+      </a>
+      <a href="https://www.blueaperenewables.co.uk/ref/48/" target="_blank" class="affiliate"
+         onclick="gtag('event', 'click', {'event_category':'CTA','event_label':'Blue Ape Affiliate Bottom'});">
+         💡 Explore Blue Ape Renewables
+      </a>
+    </div>
+  </main>
+
+  <script>
+    function calculateDeposit() {
+      const houseValue = parseFloat(document.getElementById('houseValue').value);
+      const depositPercent = parseFloat(document.getElementById('depositPercent').value);
+      const resultDiv = document.getElementById('depositResult');
+
+      if(isNaN(houseValue) || isNaN(depositPercent)) {
+        resultDiv.innerText = "Please enter valid numbers.";
+        resultDiv.classList.add('show');
+        return;
+      }
+
+      const deposit = houseValue * (depositPercent / 100);
+      resultDiv.innerText = `Deposit Required: £${deposit.toFixed(2)}`;
+      resultDiv.classList.add('show');
+
+      gtag('event', 'calculate', {
+        'event_category': 'Calculator',
+        'event_label': 'Deposit Calculator',
+        'value': deposit
+      });
+    }
+
+    function calculateMortgage() {
+      const P = parseFloat(document.getElementById('loanAmount').value);
+      const years = parseFloat(document.getElementById('loanYears').value);
+      const rate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+      const n = years * 12;
+      const resultDiv = document.getElementById('mortgageResult');
+
+      if(isNaN(P) || isNaN(years) || isNaN(rate) || n === 0) {
+        resultDiv.innerText = "Please enter valid numbers.";
+        resultDiv.classList.add('show');
+        return;
+      }
+
+      const monthlyPayment = (P * rate) / (1 - Math.pow(1 + rate, -n));
+      resultDiv.innerText = `Monthly Payment: £${monthlyPayment.toFixed(2)}`;
+      resultDiv.classList.add('show');
+
+      gtag('event', 'calculate', {
+        'event_category': 'Calculator',
+        'event_label': 'Mortgage Calculator',
+        'value': monthlyPayment
+      });
+    }
+  </script>
+</body>
+</html>
